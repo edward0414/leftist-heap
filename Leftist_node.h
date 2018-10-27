@@ -66,23 +66,25 @@ heap_null_path_length( 0 ) {
 }
 
 // You may need this
-
 template <typename Type>
 bool Leftist_node<Type>::empty() const {
 	return ( this == nullptr );
 }
 
 // You must implement everything
+/****** Done ******/
 template <typename Type>
 Type Leftist_node<Type>::retrieve() const {
 	return element;
 };
 
+/****** Done ******/
 template <class Type>
 Leftist_node<Type> *Leftist_node<Type>::left() const {
 	return left_tree;
 };
 
+/****** Done ******/
 template <class Type>
 Leftist_node<Type> * Leftist_node<Type>::right() const {
 	return right_tree;
@@ -96,16 +98,14 @@ int Leftist_node<Type>::count(Type const &obj) const {
 
 }
 
+/****** Done ******/
 template <typename Type>
 int Leftist_node<Type>::null_path_length() const { 
-	//return heap_null_path_length? heap_null_path_length: -1; 
-	//
 	if(heap_null_path_length == NULL){
 		return -1;
 	}
 	else 
 		return heap_null_path_length;
-	//swaggyp
 }
 
 template <typename Type>
@@ -127,9 +127,9 @@ void Leftist_node<Type>::push( Leftist_node<Type> *new_heap, Leftist_node<Type> 
 	}
 }
 
+/****** Done ******/
 template <typename Type>
 void Leftist_node<Type>::clear() {
-
 	if (element == NULL) {
 		return;
 	}
@@ -141,7 +141,6 @@ void Leftist_node<Type>::clear() {
 	right.clear();
 
 	delete *element;
-
 }
 
 #endif
