@@ -90,14 +90,6 @@ Leftist_node<Type> * Leftist_node<Type>::right() const {
 	return right_tree;
 };
 
-template <typename Type>
-int Leftist_node<Type>::count(Type const &obj) const {
-	// Return the number of instances of obj in this sub-tree.
-	// You can do it recursively
-	// or iteratively using stack/queue ;)
-
-}
-
 /****** Done ******/
 template <typename Type>
 int Leftist_node<Type>::null_path_length() const { 
@@ -106,25 +98,6 @@ int Leftist_node<Type>::null_path_length() const {
 	}
 	else 
 		return heap_null_path_length;
-}
-
-template <typename Type>
-void Leftist_node<Type>::push( Leftist_node<Type> *new_heap, Leftist_node<Type> *&ptr_to_this) {
-	//If the new_heap is null return
-	//if this is null, set the pointer to this to be the new heap and return
-	// If the element (value) of current node > new_heap’s element, set the pointer to this to be the new heap and push this node to the new heap
-	//If the element of this node ≤  new_heap’s element, push the node into the right subree.
-	// Update the null_path length 
-	// if the left sub-tree has a smaller null_path_length than the right sub-tree, swap the two sub-trees
-
-	if (!new_heap) {
-		return;
-	}
-
-	if (!this) {
-		ptr_to_this = new_heap;
-		return;
-	}
 }
 
 /****** Done ******/
@@ -141,6 +114,28 @@ void Leftist_node<Type>::clear() {
 	right.clear();
 
 	delete *element;
+}
+
+template <typename Type>
+int Leftist_node<Type>::count(Type const &obj) const {
+	// TODO:
+	// Return the number of instances of obj in this sub-tree.
+	// You can do it recursively
+	// or iteratively using stack/queue ;)
+	
+	return 0; //placeholder
+}
+
+template <typename Type>
+void Leftist_node<Type>::push( Leftist_node<Type> *new_heap, Leftist_node<Type> *&ptr_to_this) {
+	// TODO:
+	//If the new_heap is null return
+	//if this is null, set the pointer to this to be the new heap and return
+	// If the element (value) of current node > new_heap’s element, set the pointer to this to be the new heap and push this node to the new heap
+	//If the element of this node ≤  new_heap’s element, push the node into the right subree.
+	// Update the null_path length 
+	// if the left sub-tree has a smaller null_path_length than the right sub-tree, swap the two sub-trees
+
 }
 
 #endif

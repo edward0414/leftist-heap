@@ -95,7 +95,7 @@ void Leftist_heap<Type>::swap( Leftist_heap<Type> &heap ) {
 // one at a time.  If you do not, and just start implementing the member
 // functions so that you can't compile and test your function, good luck. :-)
 
-/*
+
 template <typename Type>
 bool Leftist_heap<Type>::empty() const {
 	return heap_size == 0;
@@ -108,18 +108,17 @@ int Leftist_heap<Type>::size() const {
 
 template <typename Type>
 int Leftist_heap<Type>::null_path_length() const {
-	// Return the heap_null_path_length of the root node
-
+	Leftist_node node = &root_node;
+	return node.null_path_length();
 }
 
 template <typename Type>
 Type Leftist_heap<Type>::top() const {
-	// If the heap is empty throw underflow 
-	// Otherwise, return the element of the root node
-	if (heap_size == 0) {
-		// throw underflow;
+	if (heap_size <= 0) {
+		throw underflow();
 	} else {
-		return &root_node;
+		Leftist_node node = &root_node;
+		return node.retrieve();
 	}
 
 }
@@ -127,31 +126,46 @@ Type Leftist_heap<Type>::top() const {
 template <typename Type>
 int Leftist_heap<Type>::count(Type const &obj) const {
 	// Return the number of instances of obj in the heap
+	
+	Leftist_node node = &root_node;
+	return node.count(obj);
 }
+
 
 template <typename Type>
 void Leftist_heap<Type>::clear() {
-	// Call clear on the root node
+	// Call clear on the root_node node
 	// Reset the root node
 	// Reset the heap size
 
-	// something like this?:
-	// root.clear()
-	// root = nullptr
-	// heap_size = 0
+	Leftist_node node = &root_node;
+	node.clear();
+	root_node = nullptr;
+	heap_size = 0;
 }
+
 
 template <typename Type>
 void Leftist_heap<Type>::push(Type const &obj) {
 	// Create a new leftist node
 	// Call push on the root node and pass the new node and root node as the arguments
 	//Increament the heap size
+
+	Leftist_node new_node = Leftist_node(obj);
+	Leftist_node root = &root_node;
+	root.push(root_node, new_node);
+	heap_size ++;
 }
 
 
 template<typename Type>
 Type Leftist_heap<Type>::pop() {
 	// If the heap is empty throw underflow
+	if (heap_size <= 0) {
+		throw underflow();
+	}
+
+	// TODO:
 	// Pop the last element and delete its node
 	// The left sub-tree becomes the root node 
 	// The right sub-tree is pushed into the new root node
@@ -159,7 +173,6 @@ Type Leftist_heap<Type>::pop() {
 	// Return the element of the popped node
 }
 
-*/
 
 // You can modify this function however you want:  it will not be tested
 
