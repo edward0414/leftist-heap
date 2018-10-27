@@ -40,14 +40,14 @@ class Leftist_heap {
 		int heap_size;
 
 	public:
-		Leftist_heap();
-		~Leftist_heap();
+		Leftist_heap(); //done
+		~Leftist_heap(); //done
 
-		void swap( Leftist_heap &heap );
+		void swap( Leftist_heap &heap ); //done
 		
 
-		bool empty() const;
-		int size() const;
+		bool empty() const; //done
+		int size() const; //done
 		int null_path_length() const;
 		Type top() const;
 		int count( Type const & ) const;
@@ -86,6 +86,7 @@ void Leftist_heap<Type>::swap( Leftist_heap<Type> &heap ) {
 
 
 
+
 // Your implementation here
 // STRONG HINT:  Write a default definition of each function, even if
 // it only returns the default value (false, 0, or Type()).
@@ -93,6 +94,16 @@ void Leftist_heap<Type>::swap( Leftist_heap<Type> &heap ) {
 // Once you have done this, you can proceed and implement the member functions
 // one at a time.  If you do not, and just start implementing the member
 // functions so that you can't compile and test your function, good luck. :-)
+
+template <typename Type>
+bool Leftist_heap<Type>::empty() const {
+	return heap_size == 0;
+}
+
+template <typename Type>
+int Leftist_heap<Type>::size() const {
+	return heap_size;
+}
 
 // You can modify this function however you want:  it will not be tested
 
