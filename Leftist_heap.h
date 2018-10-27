@@ -105,6 +105,61 @@ int Leftist_heap<Type>::size() const {
 	return heap_size;
 }
 
+template <typename Type>
+int Leftist_heap<Type>::null_path_length() const {
+	// Return the heap_null_path_length of the root node
+
+}
+
+template <typename Type>
+Type Leftist_heap<Type>::top() const {
+	// If the heap is empty throw underflow 
+	// Otherwise, return the element of the root node
+	if (heap_size == 0) {
+		// throw underflow;
+	} else {
+		return &root_node;
+	}
+
+}
+
+template <typename Type>
+int Leftist_heap<Type>::count(Type const &obj) const {
+	// Return the number of instances of obj in the heap
+}
+
+template <typename Type>
+void Leftist_heap<Type>::clear() {
+	// Call clear on the root node
+	// Reset the root node
+	// Reset the heap size
+
+	// something like this?:
+	// root.clear()
+	// root = nullptr
+	// heap_size = 0
+}
+
+template <typename Type>
+void Leftist_heap<Type>::push(Type const &obj) {
+	// Create a new leftist node
+	// Call push on the root node and pass the new node and root node as the arguments
+	//Increament the heap size
+}
+
+
+template<typename Type>
+Type Leftist_heap<Type>::pop() {
+	// If the heap is empty throw underflow
+	// Pop the last element and delete its node
+	// The left sub-tree becomes the root node 
+	// The right sub-tree is pushed into the new root node
+	// Decrement the heap size 
+	// Return the element of the popped node
+}
+
+
+
 // You can modify this function however you want:  it will not be tested
 
 template <typename T>
