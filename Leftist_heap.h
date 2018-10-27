@@ -108,7 +108,7 @@ int Leftist_heap<Type>::size() const {
 
 template <typename Type>
 int Leftist_heap<Type>::null_path_length() const {
-	Leftist_node node = &root_node;
+	Leftist_node& node = root_node;
 	return node.null_path_length();
 }
 
@@ -117,7 +117,7 @@ Type Leftist_heap<Type>::top() const {
 	if (heap_size <= 0) {
 		throw underflow();
 	} else {
-		Leftist_node node = &root_node;
+		Leftist_node& node = root_node;
 		return node.retrieve();
 	}
 
@@ -126,8 +126,8 @@ Type Leftist_heap<Type>::top() const {
 template <typename Type>
 int Leftist_heap<Type>::count(Type const &obj) const {
 	// Return the number of instances of obj in the heap
-	
-	Leftist_node node = &root_node;
+
+	Leftist_node& node = root_node;
 	return node.count(obj);
 }
 
@@ -138,7 +138,7 @@ void Leftist_heap<Type>::clear() {
 	// Reset the root node
 	// Reset the heap size
 
-	Leftist_node node = &root_node;
+	Leftist_node& node = root_node;
 	node.clear();
 	root_node = nullptr;
 	heap_size = 0;
@@ -152,7 +152,7 @@ void Leftist_heap<Type>::push(Type const &obj) {
 	//Increament the heap size
 
 	Leftist_node new_node = Leftist_node(obj);
-	Leftist_node root = &root_node;
+	Leftist_node& root = root_node;
 	root.push(root_node, new_node);
 	heap_size ++;
 }
@@ -171,6 +171,8 @@ Type Leftist_heap<Type>::pop() {
 	// The right sub-tree is pushed into the new root node
 	// Decrement the heap size 
 	// Return the element of the popped node
+
+	return 0;
 }
 
 
