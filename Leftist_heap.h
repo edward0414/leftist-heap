@@ -95,6 +95,7 @@ void Leftist_heap<Type>::swap( Leftist_heap<Type> &heap ) {
 // one at a time.  If you do not, and just start implementing the member
 // functions so that you can't compile and test your function, good luck. :-)
 
+/*
 template <typename Type>
 bool Leftist_heap<Type>::empty() const {
 	return heap_size == 0;
@@ -158,7 +159,7 @@ Type Leftist_heap<Type>::pop() {
 	// Return the element of the popped node
 }
 
-
+*/
 
 // You can modify this function however you want:  it will not be tested
 

@@ -78,22 +78,21 @@ Type Leftist_node<Type>::retrieve() const {
 	return element;
 };
 
-template <typename Type>
-Leftist_node * Leftist_node<Type>::left() const {
+template <class Type>
+Leftist_node<Type> *Leftist_node<Type>::left() const {
 	return left_tree;
 };
 
-template <typename Type>
-Leftist_node * Leftist_node<Type>::right() const {
+template <class Type>
+Leftist_node<Type> * Leftist_node<Type>::right() const {
 	return right_tree;
 };
 
 template <typename Type>
-int Leftist_node<Type>::count( Type & obj) const { 
+int Leftist_node<Type>::count(Type const &obj) const {
 	// Return the number of instances of obj in this sub-tree.
 	// You can do it recursively
 	// or iteratively using stack/queue ;)
-
 
 }
 
@@ -130,10 +129,19 @@ void Leftist_node<Type>::push( Leftist_node<Type> *new_heap, Leftist_node<Type> 
 
 template <typename Type>
 void Leftist_node<Type>::clear() {
-	//If new heap is null return
-	// Call clear function on the left sub-tree
-	// Call clear function on the right sub-tree
-	// Delete this node
+
+	if (element == NULL) {
+		return;
+	}
+
+	Leftist_node left = &left_tree;
+	left.clear();
+
+	Leftist_node right = &right_tree;
+	right.clear();
+
+	delete *element;
+
 }
 
 #endif
