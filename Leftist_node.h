@@ -94,11 +94,18 @@ int Leftist_node<Type>::count( Type & obj) const {
 	// You can do it recursively
 	// or iteratively using stack/queue ;)
 
+
 }
 
 template <typename Type>
 int Leftist_node<Type>::null_path_length() const { 
-	return heap_null_path_length? heap_null_path_length: -1; //clean syntax bryant ;)
+	//return heap_null_path_length? heap_null_path_length: -1; 
+	//
+	if(heap_null_path_length == NULL){
+		return -1;
+	}
+	else 
+		return heap_null_path_length;
 }
 
 template <typename Type>
