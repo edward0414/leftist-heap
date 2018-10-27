@@ -106,6 +106,7 @@ int Leftist_node<Type>::null_path_length() const {
 	}
 	else 
 		return heap_null_path_length;
+	//swaggyp
 }
 
 template <typename Type>
