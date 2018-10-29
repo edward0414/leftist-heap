@@ -107,13 +107,13 @@ void Leftist_node<Type>::clear() {
 		return;
 	}
 
-	Leftist_node& left = left_tree;
-	left.clear();
+	Leftist_node* left = left_tree;
+	left->clear();
 
-	Leftist_node& right = right_tree;
-	right.clear();
+	Leftist_node* right = right_tree;
+	right->clear();
 
-	delete *element;
+	delete &element;
 }
 
 template <typename Type>
