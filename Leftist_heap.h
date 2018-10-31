@@ -98,19 +98,20 @@ void Leftist_heap<Type>::swap( Leftist_heap<Type> &heap ) {
 
 template <typename Type>
 bool Leftist_heap<Type>::empty() const {
-	return heap_size == 0;
+	return this->heap_size == 0;
 }
 
 template <typename Type>
 int Leftist_heap<Type>::size() const {
-	return heap_size;
+	return this->heap_size;
 }
 
 template <typename Type>
 int Leftist_heap<Type>::null_path_length() const {
-	Leftist_node<Type>* node = root_node;
-	
-	return node->null_path_length();
+	if(this->root_node == nullptr){
+		return -1;
+	}
+	return this->root_node->null_path_length();
 }
 
 template <typename Type>
@@ -118,8 +119,7 @@ Type Leftist_heap<Type>::top() const {
 	if (heap_size <= 0) {
 		throw underflow();
 	} else {
-		Leftist_node<Type>* node = root_node;
-		return node->retrieve();
+		return this->root_node->retrieve();
 	}
 
 }
@@ -127,9 +127,11 @@ Type Leftist_heap<Type>::top() const {
 template <typename Type>
 int Leftist_heap<Type>::count(Type const &obj) const {
 	// Return the number of instances of obj in the heap
-
-	Leftist_node<Type>* node = root_node;
-	return node->count(obj);
+	if(this->root_node == nullptr){
+		return -1;
+	}
+	else 
+		return this->root_node->count(obj);
 }
 
 
@@ -138,31 +140,37 @@ void Leftist_heap<Type>::clear() {
 	// Call clear on the root_node node
 	// Reset the root node
 	// Reset the heap size
+	if(this->root_node == nullptr){
+		this->root_node->clear();
+	}
 
-	Leftist_node<Type>* node = root_node;
-	node->clear();
-	root_node = nullptr;
-	heap_size = 0;
+	this->heap_size = 0;
 }
 
-/*
+
 template <typename Type>
 void Leftist_heap<Type>::push(Type const &obj) {
 	// Create a new leftist node
 	// Call push on the root node and pass the new node and root node as the arguments
 	//Increament the heap size
 
-	Leftist_node<Type>* new_node = Leftist_node(obj);
-	Leftist_node<Type>* root = root_node;
-	root->push(root, new_node);
-	heap_size ++;
+	Leftist_node<Type>* new_node = new Leftist_node<Type>(obj);
+	
+	if(this->root_node == nullptr){
+		this->root_node = new_node;
+	}
+	else{
+	this->root_node->push(new_node, this->root_node);
+	}
+
+	this->heap_size ++;
 }
 
-/*
+
 template<typename Type>
 Type Leftist_heap<Type>::pop() {
 	// If the heap is empty throw underflow
-	if (heap_size <= 0) {
+	if (this->root_node == nullptr) {
 		throw underflow();
 	}
 
@@ -172,8 +180,18 @@ Type Leftist_heap<Type>::pop() {
 	// The right sub-tree is pushed into the new root node
 	// Decrement the heap size 
 	// Return the element of the popped node
+	Leftist_node<Type> *l = this->root_node->left();
+	Leftist_node<Type> *r = this->root_node->right();
 
-	return 0;
+	Type value = this->root_node->retrieve();
+
+	delete this->root_node;
+	this->root_node = l;
+	this->root_node->push(r, this->root_node);
+
+	this->heap_size = this->heap_size - 1;
+
+	return value;
 }
 
 
@@ -186,5 +204,5 @@ std::ostream &operator<<( std::ostream &out, Leftist_heap<T> const &heap ) {
 
 // Is an error showing up in ece250.h or elsewhere?
 // Did you forget a closing '}' ?
-*/
+
 #endif

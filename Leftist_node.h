@@ -76,44 +76,44 @@ bool Leftist_node<Type>::empty() const {
 template <typename Type>
 Type Leftist_node<Type>::retrieve() const {
 	return element;
-};
+}
 
 /****** Done ******/
 template <class Type>
 Leftist_node<Type> *Leftist_node<Type>::left() const {
-	return left_tree;
-};
+	return this->left_tree;
+}
 
 /****** Done ******/
 template <class Type>
 Leftist_node<Type> * Leftist_node<Type>::right() const {
-	return right_tree;
-};
+	return this->right_tree;
+}
 
 /****** Done ******/
 template <typename Type>
 int Leftist_node<Type>::null_path_length() const { 
-	if(heap_null_path_length == NULL){
+	if(this->heap_null_path_length == nullptr){
 		return -1;
 	}
 	else 
-		return heap_null_path_length;
+		return this->heap_null_path_length;
 }
 
 /****** Done ******/
 template <typename Type>
 void Leftist_node<Type>::clear() {
-	if (element == NULL) {
+	if (this == NULL) {
 		return;
 	}
 
-	Leftist_node* left = left_tree;
+	Leftist_node* left = this->left_tree;
 	left->clear();
 
-	Leftist_node* right = right_tree;
+	Leftist_node* right = this->right_tree;
 	right->clear();
 
-	delete &element;
+	delete this;
 }
 
 template <typename Type>
@@ -122,8 +122,23 @@ int Leftist_node<Type>::count(Type const &obj) const {
 	// Return the number of instances of obj in this sub-tree.
 	// You can do it recursively
 	// or iteratively using stack/queue ;)
+	int counter = 0;
 	
-	return 0; //placeholder
+	if(this->left() != nullptr){
+		counter = counter + this->left_tree->count(obj);
+	}
+	if(this->right() != nullptr){
+		counter = counter + this->right_tree->count(obj);
+	}
+	if(this->element == obj){
+		counter++;
+	}
+
+	if(empty()){
+		return 0;
+	}
+	return counter;
+	//return ; //placeholder
 }
 
 template <typename Type>
@@ -135,6 +150,60 @@ void Leftist_node<Type>::push( Leftist_node<Type> *new_heap, Leftist_node<Type> 
 	//If the element of this node ≤  new_heap’s element, push the node into the right subree.
 	// Update the null_path length 
 	// if the left sub-tree has a smaller null_path_length than the right sub-tree, swap the two sub-trees
+
+
+
+/*ii) if the current node is storing a value less-than-orequal-
+to the value stored in the root of the new heap, push the new node onto the right
+sub-tree with right_tree. Now, update the null-path length and if the left-sub-tree has a
+smaller null-path length than the right sub-tree, swap the two sub-trees, iii) otherwise, set
+the pointer to this to be the new heap and push this node into the new heap (with an
+appropriate second argument). (O(ln(n)))*/
+
+	if(new_heap == nullptr){
+		return;
+	}
+	if(empty()){
+		ptr_to_this = new_heap;
+		return;
+	}
+
+
+	if(this->retrieve() <= new_heap->retrieve()){
+		if(this->right() != nullptr){
+			this->right_tree->push(new_heap, this->right_tree);
+		}
+		int npl_left = -1;
+		int npl_right = -1;
+
+		if(this->left() != nullptr){
+			npl_left =  this->left()->null_path_length();
+		}
+		if(this->right() != nullptr){
+			npl_right =  this->right()->null_path_length();
+		}
+
+		int m = npl_left;
+	
+		if(m > npl_right){
+			m = npl_right;
+		}
+
+		ptr_to_this->heap_null_path_length = 1+m;
+		
+		if(npl_left < npl_right){
+			Leftist_node<Type> * temp = this->left_tree;
+			this->left_tree =  this->right_tree;
+			this->right_tree = temp;
+		}
+	}
+		
+
+	else{
+		ptr_to_this = new_heap;
+		new_heap->push(this, ptr_to_this);
+		return;
+	}
 
 }
 
