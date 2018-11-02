@@ -40,14 +40,14 @@ class Leftist_heap {
 		int heap_size;
 
 	public:
-		Leftist_heap(); //done
-		~Leftist_heap(); //done
+		Leftist_heap();
+		~Leftist_heap();
 
-		void swap( Leftist_heap &heap ); //done
+		void swap( Leftist_heap &heap );
 		
 
-		bool empty() const; //done
-		int size() const; //done
+		bool empty() const;
+		int size() const;
 		int null_path_length() const;
 		Type top() const;
 		int count( Type const & ) const;
@@ -84,118 +84,109 @@ void Leftist_heap<Type>::swap( Leftist_heap<Type> &heap ) {
 	std::swap( heap_size, heap.heap_size );
 }
 
-
-
-
-// Your implementation here
-// STRONG HINT:  Write a default definition of each function, even if
-// it only returns the default value (false, 0, or Type()).
-//
-// Once you have done this, you can proceed and implement the member functions
-// one at a time.  If you do not, and just start implementing the member
-// functions so that you can't compile and test your function, good luck. :-)
-
-
 template <typename Type>
-bool Leftist_heap<Type>::empty() const {
-	return this->heap_size == 0;
+bool Leftist_heap<Type>::empty() const{
+	// Check if the heap is empty 
+	if(this->heap_size <= 0){
+		return true;
+	}
+	else 
+		return false;
 }
 
-template <typename Type>
-int Leftist_heap<Type>::size() const {
+template<typename Type>
+int Leftist_heap<Type>::size() const{
+	// Return the number of nodes in the heap
 	return this->heap_size;
 }
 
-template <typename Type>
+template<typename Type>
 int Leftist_heap<Type>::null_path_length() const {
-	if(this->root_node == nullptr){
-		return -1;
-	}
-	return this->root_node->null_path_length();
-}
-
-template <typename Type>
-Type Leftist_heap<Type>::top() const {
-	if (heap_size <= 0) {
-		throw underflow();
-	} else {
-		return this->root_node->retrieve();
-	}
-
-}
-
-template <typename Type>
-int Leftist_heap<Type>::count(Type const &obj) const {
-	// Return the number of instances of obj in the heap
+// Return the heap_null_path_length of the root node
 	if(this->root_node == nullptr){
 		return -1;
 	}
 	else 
-		return this->root_node->count(obj);
+		return this->root_node->null_path_length();
 }
 
-
-template <typename Type>
-void Leftist_heap<Type>::clear() {
-	// Call clear on the root_node node
-	// Reset the root node
-	// Reset the heap size
-	if(this->root_node == nullptr){
-		this->root_node->clear();
+template<typename Type>
+Type Leftist_heap<Type>::top() const{
+// If the heap is empty throw underflow 
+// Otherwise, return the element of the root node
+	if(this->heap_size <= 0){
+		throw underflow();
 	}
+	return this->root_node->retrieve();
+}
+
+template<typename Type>
+int Leftist_heap<Type>::count(Type const &obj) const {
+// Return the number of instances of obj in the heap
+	if(this->root_node == nullptr){
+		return 0;
+	}
+	return this->root_node->count(obj);
+}
+
+template<typename Type>
+void Leftist_heap<Type>::clear() {
+// Call clear on the root node
+// Reset the root node
+// Reset the heap size
+	this->root_node->clear();
+	this->root_node = nullptr;
 
 	this->heap_size = 0;
 }
 
-
-template <typename Type>
+template<typename Type>
 void Leftist_heap<Type>::push(Type const &obj) {
-	// Create a new leftist node
-	// Call push on the root node and pass the new node and root node as the arguments
-	//Increament the heap size
+// Create a new leftist node
+// Call push on the root node and pass the new node and root node as the arguments
+//Increament the heap size
+	Leftist_node<Type>* newNode = new Leftist_node<Type>(obj);
 
-	Leftist_node<Type>* new_node = new Leftist_node<Type>(obj);
-	
 	if(this->root_node == nullptr){
-		this->root_node = new_node;
+		this->root_node = newNode;
 	}
 	else{
-	this->root_node->push(new_node, this->root_node);
+		this->root_node->push(newNode, this->root_node);
 	}
+	
 
-	this->heap_size ++;
+	this->heap_size++;
 }
-
 
 template<typename Type>
 Type Leftist_heap<Type>::pop() {
-	// If the heap is empty throw underflow
-	if (this->root_node == nullptr) {
+// If the heap is empty throw underflow
+// Pop the last element and delete its node
+// The left sub-tree becomes the root node 
+// The right sub-tree is pushed into the new root node
+// Decrement the heap size 
+// Return the element of the popped node
+	if(empty()){
 		throw underflow();
 	}
 
-	// TODO:
-	// Pop the last element and delete its node
-	// The left sub-tree becomes the root node 
-	// The right sub-tree is pushed into the new root node
-	// Decrement the heap size 
-	// Return the element of the popped node
-	Leftist_node<Type> *l = this->root_node->left();
-	Leftist_node<Type> *r = this->root_node->right();
+	Type value = root_node->retrieve();
 
-	Type value = this->root_node->retrieve();
+	Leftist_node<Type>* original = root_node;
 
-	delete this->root_node;
-	this->root_node = l;
-	this->root_node->push(r, this->root_node);
+	root_node = root_node->left();
 
-	this->heap_size = this->heap_size - 1;
+	//Leftist_node<Type>* right = root_node->right();
+
+	root_node->push(original->right(), root_node);
+
+	delete original;
+
+	heap_size--;
 
 	return value;
 }
 
-
-// You can modify this function however you want:  it will not be tested
 
 template <typename T>
 std::ostream &operator<<( std::ostream &out, Leftist_heap<T> const &heap ) {
